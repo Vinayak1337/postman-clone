@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URI")
+}
+
+model Request {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  method        HttpMethod
+  url           String
+  headers       Json?
+  params        Json?
+  body          String?
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  DELETE
+}
