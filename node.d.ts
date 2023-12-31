@@ -1,0 +1,3 @@
+module globalThis {
+  var prisma;
+}

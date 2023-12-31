@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import clsx from 'clsx';
 import Navbar from '@/components/Navbar/Navbar';
+import Providers from '@/lib/provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,14 +18,23 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={clsx(inter.className, 'flex flex-col h-dvh w-dvw')}>
-        <header className="flex justify-center py-1 bg-primary">
-          <h1 className="text-sm text-white font-semibold">POSTMAN CLONE</h1>
+    <Providers>
+      <html lang="en" className="bg-white">
+        <body
+          className={clsx(
+            inter.className,
+            'flex flex-col h-dvh w-dvw overflow-hidden',
+          )}
+        >
+          <header className="flex justify-center py-1 border-solid border-b">
+            <h1 className="text-sm text-primary font-semibold">
+              POSTMAN CLONE
+            </h1>
+          </header>
           <Navbar />
-        </header>
-        {children}
-      </body>
-    </html>
+          {children}
+        </body>
+      </html>
+    </Providers>
   );
 }

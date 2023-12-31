@@ -18,6 +18,8 @@ const config: Config = {
           DEFAULT: '#2563EB',
           hover: '#1D4ED8',
         },
+        grayFade:
+          'linear-gradient(to bottom, white, white 20%, black 20%, black 80%, white 80%, white)',
       },
     },
   },

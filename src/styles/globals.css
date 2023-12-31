@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .vertical-line::after {
+    content: '';
+    @apply w-[0.1px] h-4/6 bg-gray-200 absolute z-10 right-0;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -9,8 +16,8 @@
 .hide-scrollbar {
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+}
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

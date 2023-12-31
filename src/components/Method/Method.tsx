@@ -10,7 +10,7 @@ const POST = () => <p className="text-POST">POST</p>;
 
 const PUT = () => <p className="text-PUT">PUT</p>;
 
-const DELETE = () => <p className="text-DELETE">DELETE</p>;
+const DELETE = () => <p className="text-DELETE">DEL</p>;
 
 Method.GET = GET;
 Method.POST = POST;
