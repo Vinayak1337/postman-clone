@@ -6,13 +6,20 @@ type PartialRequest = Prisma.RequestGetPayload<{
   select: { id: true; url: true; method: true };
 }>;
 
+type UserResponse = {
+  body: any;
+  headers: any;
+  status: number;
+  statusText: string;
+};
+
 const initialState = {
   requests: {} as {
     [id: string]: Partial<Request> & PartialRequest;
   },
   selectedRequestId: '',
   response: {} as {
-    [id: string]: Response;
+    [id: string]: UserResponse;
   },
   selectedMeta: 'params' as 'params' | 'headers' | 'body',
 };
@@ -48,19 +55,37 @@ const requestSlice = createSlice({
     },
     sendRequestStart(
       _,
-      __: PayloadAction<{
-        request: Request;
-      }>,
+      __: PayloadAction<
+        Omit<Request, 'headers' | 'params'> & {
+          headers: Array<{
+            key: string;
+            value: string;
+            enabled: boolean;
+          }>;
+          params: Array<{
+            key: string;
+            value: string;
+            enabled: boolean;
+          }>;
+        }
+      >,
     ) {},
     sendRequestSuccess(
       state,
       action: PayloadAction<{
         id: string;
-        response: Response;
+        response: UserResponse;
       }>,
     ) {
       state.response[action.payload.id] = action.payload.response;
     },
+    updateRequestData(
+      _,
+      __: PayloadAction<{
+        id: string;
+        request: Pick<Request, 'url' | 'body' | 'headers' | 'method' | 'params'>;
+      }>,
+    ) {},
     selectRequest(state, action: PayloadAction<string>) {
       state.selectedRequestId = action.payload;
     },
@@ -70,7 +95,7 @@ const requestSlice = createSlice({
     changeMethod(state, action: PayloadAction<HttpMethod>) {
       state.requests[state.selectedRequestId].method = action.payload;
     },
-    changeBody(state, action: PayloadAction<string>) {
+    changeBody(state, action: PayloadAction<Prisma.JsonValue>) {
       state.requests[state.selectedRequestId].body = action.payload;
     },
     changeHeaders(state, action: PayloadAction<Prisma.JsonValue>) {
@@ -101,6 +126,7 @@ export const {
   changeHeaders,
   changeParams,
   selectMeta,
+  updateRequestData,
 } = requestSlice.actions;
 
 export default requestSlice.reducer;

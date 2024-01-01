@@ -15,15 +15,6 @@ const RequestNav = () => {
   const { request: requestId } = params;
 
   useEffect(() => {
-    console.log(
-      'requestId',
-      requestId,
-      !!requests[requestId as string],
-      'selectedRequest',
-      selectedRequest,
-      !!requests[selectedRequest],
-    );
-
     if (!requests[requestId as string] && requests[selectedRequest])
       router.push(`/${selectedRequest}`);
 

@@ -1,39 +1,63 @@
 'use client';
-import { HttpMethod } from '@prisma/client';
+import { HttpMethod, Prisma } from '@prisma/client';
 import { useState } from 'react';
 import Select from 'react-select';
 import Method from '../Method/Method';
 import clsx from 'clsx';
 import { useRTKDispatch, useRTKSelector } from '@/lib/redux';
-import { changeMethod, changeUrl } from '@/lib/redux/Request/request.slice';
+import {
+  changeMethod,
+  changeUrl,
+  sendRequestStart,
+} from '@/lib/redux/Request/request.slice';
+import { toast } from 'react-toastify';
 
 const RequestHeader = () => {
-  const url = useRTKSelector(
-    (state) => state.request.requests[state.request.selectedRequestId]?.url,
+  const request = useRTKSelector(
+    (state) => state.request.requests[state.request.selectedRequestId],
   );
+
   const dispatch = useRTKDispatch();
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(changeUrl(e.target.value));
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(sendRequestStart(request as any));
+    toast.promise(
+      new Promise(() => {}),
+      {
+        pending: 'Processing...',
+      },
+      {
+        toastId: 'request-' + request.id,
+      },
+    );
+  };
+
   return (
     <div className="flex items-center gap-2">
-      <div className="border-2 flex flex-grow rounded-lg">
-        <Methods />
+      <form className="flex items-center gap-2 w-full" onSubmit={handleSubmit}>
+        <div className="border-2 flex flex-grow rounded-lg">
+          <Methods />
+
+          <input
+            name="url"
+            id="url"
+            className={clsx('flex-grow caret-primary pl-5 outline-primary')}
+            defaultValue={request?.url}
+            placeholder="Untitled Request"
+            onChange={handleUrlChange}
+            required
+          />
+        </div>
         <input
-          name="url"
-          id="url"
-          className={clsx('flex-grow caret-primary pl-5 outline-primary')}
-          defaultValue={url}
-          placeholder="Untitled Request"
-          onChange={handleUrlChange}
+          className="bg-secondary hover:bg-secondary-hover px-5 py-3 rounded-lg text-white cursor-pointer"
+          type="submit"
+          value="Send"
         />
-      </div>
-      <input
-        className="bg-secondary hover:bg-secondary-hover px-5 py-3 rounded-lg text-white"
-        type="submit"
-        value="Send"
-      />
+      </form>
     </div>
   );
 };

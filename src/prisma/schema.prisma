@@ -15,7 +15,7 @@ model Request {
   url           String
   headers       Json?
   params        Json?
-  body          String?
+  body          Json?
 }
 
 enum HttpMethod {
