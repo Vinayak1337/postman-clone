@@ -1,5 +1,5 @@
 import { useRTKDispatch, useRTKSelector } from '@/lib/redux';
-import TableForm from './TableForm';
+import TableForm from '../TableForm/TableForm';
 import { JsonObject } from '@prisma/client/runtime/library';
 import { changeParams } from '@/lib/redux/Request/request.slice';
 

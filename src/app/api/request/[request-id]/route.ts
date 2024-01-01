@@ -13,7 +13,10 @@ export async function GET(
       where: { id: requestId },
     });
 
-    return new Response(JSON.stringify(requests), { status: 200 });
+    return new Response(JSON.stringify(requests), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error(error);
     return new Response('Internal server error', { status: 500 });

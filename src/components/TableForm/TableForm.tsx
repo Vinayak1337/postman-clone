@@ -1,4 +1,5 @@
 import { TrashIcon } from '@heroicons/react/16/solid';
+import clsx from 'clsx';
 import { FC } from 'react';
 
 const TableForm: FC<TableFormProps> = ({
@@ -12,7 +13,11 @@ const TableForm: FC<TableFormProps> = ({
   inputKey,
   inputValue,
 }) => (
-  <div className="flex font-medium w-full">
+  <div
+    className={clsx('flex font-medium w-full', {
+      'font-semibold': disabled,
+    })}
+  >
     <div className="p-1 min-w-10 border flex items-center justify-center">
       {!isDummy && !disabled && (
         <input

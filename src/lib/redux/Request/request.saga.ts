@@ -70,6 +70,13 @@ function* sendRequest(action: ReturnType<typeof sendRequestStart>) {
       if (typeof headers[key] === 'string')
         serializedHeaders[key] = headers[key];
 
+    if (
+      ['audio', 'video', 'image'].some((type) =>
+        serializedHeaders['content-type'].includes(type),
+      )
+    )
+      data = action.payload.url;
+
     yield put(
       sendRequestSuccess({
         id: action.payload.id,

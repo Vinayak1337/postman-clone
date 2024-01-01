@@ -1,7 +1,7 @@
 import { useRTKDispatch, useRTKSelector } from '@/lib/redux';
 import { changeHeaders } from '@/lib/redux/Request/request.slice';
 import { JsonObject } from '@prisma/client/runtime/library';
-import TableForm from './TableForm';
+import TableForm from '../TableForm/TableForm';
 
 const Headers = () => {
   const headers =

@@ -15,7 +15,7 @@ const RequestPage = async ({
   if (!request) return notFound();
 
   return (
-    <div className="flex flex-col p-3">
+    <div className="flex flex-col p-3 flex-grow">
       <Request {...request} />
       <Response />
     </div>

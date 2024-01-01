@@ -20,6 +20,12 @@ const config: Config = {
         },
         grayFade:
           'linear-gradient(to bottom, white, white 20%, black 20%, black 80%, white 80%, white)',
+        status: {
+          success: '#28a745',
+          info: '#007bff',
+          warning: '#fd7e14',
+          error: '#dc3545',
+        },
       },
     },
   },

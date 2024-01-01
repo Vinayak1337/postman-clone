@@ -11,7 +11,10 @@ export async function POST(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(request), { status: 201 });
+    return new Response(JSON.stringify(request), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error(error);
     return new Response('Internal server error', {
@@ -31,7 +34,10 @@ export async function GET(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(requests), { status: 200 });
+    return new Response(JSON.stringify(requests), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error(error);
     return new Response('Internal server error', {

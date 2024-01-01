@@ -83,7 +83,10 @@ const requestSlice = createSlice({
       _,
       __: PayloadAction<{
         id: string;
-        request: Pick<Request, 'url' | 'body' | 'headers' | 'method' | 'params'>;
+        request: Pick<
+          Request,
+          'url' | 'body' | 'headers' | 'method' | 'params'
+        >;
       }>,
     ) {},
     selectRequest(state, action: PayloadAction<string>) {
