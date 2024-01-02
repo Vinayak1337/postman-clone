@@ -52,16 +52,31 @@ function* createRequest() {
 
 function* sendRequest(action: ReturnType<typeof sendRequestStart>) {
   try {
+    const clonePayload = {
+      id: action.payload.id,
+      request: {
+        url: action.payload.url,
+        method: action.payload.method,
+        body: action.payload.body,
+        headers: action.payload.headers,
+        params: action.payload.params,
+      },
+    };
+
+    yield put(updateRequestData(clonePayload));
+
     let { data, headers, status, statusText } = (yield axios({
       url: action.payload.url,
       method: action.payload.method,
       data: action.payload.body,
-      headers: action.payload.headers?.map((header) => ({
-        [header.key]: header.value,
-      })) as any,
-      params: action.payload.params?.map((param) => ({
-        [param.key]: param.value,
-      })) as any,
+      headers: action.payload.headers?.reduce((acc, curr) => {
+        acc[curr.key] = curr.value;
+        return acc;
+      }, {} as any),
+      params: action.payload.params?.reduce((acc, curr) => {
+        acc[curr.key] = curr.value;
+        return acc;
+      }, {} as any),
     })) as AxiosResponse;
 
     let serializedHeaders: { [x: string]: any } = {};
@@ -88,21 +103,13 @@ function* sendRequest(action: ReturnType<typeof sendRequestStart>) {
         },
       }),
     );
-
-    const clonePayload = {
-      id: action.payload.id,
-      request: {
-        url: action.payload.url,
-        method: action.payload.method,
-        body: action.payload.body,
-        headers: action.payload.headers,
-        params: action.payload.params,
-      },
-    };
-
-    yield put(updateRequestData(clonePayload));
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    toast.error(
+      [error.message, error.response?.statusText]
+        .filter((t) => !!t)
+        .join(' - '),
+    );
   } finally {
     toast.dismiss('request-' + action.payload.id);
   }

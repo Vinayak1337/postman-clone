@@ -23,7 +23,7 @@ export default async function RootLayout({
         <body
           className={clsx(
             inter.className,
-            'flex flex-col h-dvh w-dvw overflow-hidden pb-10',
+            'flex flex-col max-h-dvh h-dvh w-dvw overflow-hidden pb-10',
           )}
         >
           <header className="flex justify-center py-1 border-solid border-b">

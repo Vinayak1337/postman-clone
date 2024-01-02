@@ -21,7 +21,7 @@ const Response = () => {
   const { status, statusText } = response;
 
   return (
-    <div className="flex-grow border border-gray-600 rounded-lg flex flex-col gap-5 p-3">
+    <div className="border border-gray-600 rounded-lg flex flex-col gap-5 p-3 h-full overflow-hidden max-h-full">
       <div className="flex justify-between">
         <div className="flex gap-3 font-medium">
           <button

@@ -14,8 +14,10 @@ const ResponseBody = () => {
   );
 
   return (
-    <div className="flex justify-center items-center w-full max-h-[44vh]">
-      {RenderBody(body, contentType)}
+    <div className='max-w-full h-full max-h-full overflow-hidden'>
+      <div className="flex w-full h-full overflow-y-scroll">
+        {RenderBody(body, contentType)}
+      </div>
     </div>
   );
 };
