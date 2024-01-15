@@ -12,7 +12,12 @@ const config: Config = {
         GET: '#10B981',
         POST: '#3B82F6',
         PUT: '#F59E0B',
+        PATCH: '#8B5CF6',
         DELETE: '#EF4444',
+        // Head is green
+        HEAD: '#10B981',
+        // Options is Pink
+        OPTIONS: '#EC4899',
         primary: '#FF6B01',
         secondary: {
           DEFAULT: '#2563EB',

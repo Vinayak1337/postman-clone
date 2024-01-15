@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useState } from 'react';
-import Method from '../Method/Method';
+import Method, { methods } from '../Method/Method';
 import { PlusIcon, XCircleIcon } from '@heroicons/react/16/solid';
 import { useRouter } from 'next/navigation';
 import { useRTKDispatch } from '@/lib/redux';
@@ -50,7 +50,7 @@ export const RequestTab = ({
       href={`/${id}`}
     >
       <div className="font-medium">
-        {methods[method as keyof typeof methods]}
+        {methods[method as keyof methods]}
       </div>
       <p className="truncate">{url || 'Untitled Request'}</p>
       {hovering && (
@@ -61,13 +61,6 @@ export const RequestTab = ({
       )}
     </Link>
   );
-};
-
-const methods = {
-  GET: <Method.GET />,
-  POST: <Method.POST />,
-  PUT: <Method.PUT />,
-  DELETE: <Method.DELETE />,
 };
 
 export const CreateNewRequest = () => {

@@ -1,8 +1,8 @@
 'use client';
 import { HttpMethod, Prisma } from '@prisma/client';
 import { useState } from 'react';
-import Select from 'react-select';
-import Method from '../Method/Method';
+import Select, { SingleValue } from 'react-select';
+import Method, { methods } from '../Method/Method';
 import clsx from 'clsx';
 import { useRTKDispatch, useRTKSelector } from '@/lib/redux';
 import {
@@ -65,12 +65,10 @@ const RequestHeader = () => {
 const options: {
   value: HttpMethod;
   label: JSX.Element;
-}[] = [
-  { value: 'GET', label: <Method.GET /> },
-  { value: 'POST', label: <Method.POST /> },
-  { value: 'PUT', label: <Method.PUT /> },
-  { value: 'DELETE', label: <Method.DELETE /> },
-];
+}[] = Object.entries(methods).map(([key, value]) => ({
+  value: key as HttpMethod,
+  label: value,
+}));
 
 const Methods = () => {
   const method = useRTKSelector(
@@ -81,10 +79,9 @@ const Methods = () => {
     options.find((option) => option.value === method),
   );
 
-  const handleMethodChange = (newValue: {
-    value: HttpMethod;
-    label: JSX.Element;
-  }) => {
+  const handleMethodChange = (newValue: SingleValue<(typeof options)[0]>) => {
+    if (!newValue) return;
+
     setSelectedMethod(newValue);
     dispatch(changeMethod(newValue.value));
   };
@@ -93,10 +90,10 @@ const Methods = () => {
     <Select
       name="method"
       id="method"
-      options={options as any}
+      options={options}
       value={selectedMethod}
       defaultValue={selectedMethod}
-      onChange={handleMethodChange as any}
+      onChange={handleMethodChange}
       styles={{
         control: (provided) => ({
           ...provided,

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const RequestSchema = z.object({
   url: z.string(),
-  method: z.enum(['GET', 'POST', 'PUT', 'DELETE']),
+  method: z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']),
   headers: z.array(
     z.object({
       key: z.string(),
