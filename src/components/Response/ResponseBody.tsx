@@ -49,7 +49,7 @@ const RenderBody = (body: any, contentType: string) => {
       return <audio src={body} controls />;
 
     case contentType.includes('video'):
-      return <video className="w-full h-full" src={body} controls />;
+      return <video className="w-full h-full aspect-video" src={body} controls />;
 
     default:
       return <p>{typeof body === 'string' ? body : JSON.stringify(body)}</p>;
