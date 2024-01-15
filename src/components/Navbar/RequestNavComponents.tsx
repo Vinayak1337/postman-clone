@@ -13,6 +13,7 @@ import {
   selectRequest,
 } from '@/lib/redux/Request/request.slice';
 import { createRequest } from '@/lib/request.actions';
+import { toast } from 'react-toastify';
 
 export const RequestTab = ({
   request: { id, method, url },
@@ -49,9 +50,7 @@ export const RequestTab = ({
       )}
       href={`/${id}`}
     >
-      <div className="font-medium">
-        {methods[method as keyof methods]}
-      </div>
+      <div className="font-medium">{methods[method as keyof methods]}</div>
       <p className="truncate">{url || 'Untitled Request'}</p>
       {hovering && (
         <XCircleIcon
@@ -68,11 +67,25 @@ export const CreateNewRequest = () => {
   const dispatch = useRTKDispatch();
 
   const createRequestAndRoute = async () => {
+    toast.promise(
+      new Promise(() => {}),
+      {
+        pending: 'Creating new request...',
+        success: 'Request created!',
+        error: 'Error creating request',
+      },
+      {
+        toastId: 'create-new-request',
+      },
+    );
+
     const request = await createRequest({ method: 'GET', url: '' });
     if (!request) return;
 
     dispatch(createRequestSuccess(request));
     router.push(`/${request.id}`);
+
+    toast.dismiss('create-new-request');
   };
 
   return (

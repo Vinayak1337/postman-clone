@@ -5,7 +5,9 @@ import { useRTKSelector } from '@/lib/redux';
 import { useParams, useRouter } from 'next/navigation';
 
 const RequestNav = () => {
-  const requests = useRTKSelector((state) => state.request.requests);
+  const { loading, ...requests } = useRTKSelector(
+    (state) => state.request.requests,
+  );
   const selectedRequest = useRTKSelector(
     (state) => state.request.selectedRequestId,
   );

@@ -1,12 +1,14 @@
 'use client';
-import { useRTKDispatch } from '@/lib/redux';
+import { useRTKDispatch, useRTKSelector } from '@/lib/redux';
 import RequestNav from './RequestNav';
 import { CreateNewRequest } from './RequestNavComponents';
 import { fetchRequestsStart } from '@/lib/redux/Request/request.slice';
 import { useEffect } from 'react';
+import { MoonLoader } from 'react-spinners';
 
 function Navbar() {
   const dispatch = useRTKDispatch();
+  const loading = useRTKSelector((state) => state.request.requests.loading);
 
   useEffect(() => {
     dispatch(fetchRequestsStart());
@@ -18,6 +20,9 @@ function Navbar() {
       <div className="flex w-full overflow-x-scroll hide-scrollbar">
         <RequestNav />
         <CreateNewRequest />
+        <div className="p-2">
+          <MoonLoader size={20} loading={loading} color="black" />
+        </div>
       </div>
     </nav>
   );

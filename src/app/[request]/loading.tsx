@@ -1,9 +1,10 @@
+'use client'
 import React from 'react';
-import { PulseLoader } from 'react-spinners';
+import { BarLoader } from 'react-spinners';
 
 const Loading = () => (
   <div className="w-full flex justify-center relative top-5">
-    <PulseLoader size={16} />
+    <BarLoader loading />
   </div>
 );
 

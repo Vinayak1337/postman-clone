@@ -38,14 +38,13 @@ const RequestHeader = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <form className="flex items-center gap-2 w-full" onSubmit={handleSubmit}>
-        <div className="border-2 flex flex-grow rounded-lg">
+      <form className="flex items-center gap-2 w-full text-sm md:text-base" onSubmit={handleSubmit}>
+        <div className="border-2 w-full flex rounded-lg">
           <Methods />
-
           <input
             name="url"
             id="url"
-            className={clsx('flex-grow caret-primary pl-5 outline-primary')}
+            className={clsx('caret-primary flex-grow md:pl-5 min-w-10 outline-primary')}
             defaultValue={request?.url}
             placeholder="Untitled Request"
             onChange={handleUrlChange}
@@ -53,7 +52,7 @@ const RequestHeader = () => {
           />
         </div>
         <input
-          className="bg-secondary hover:bg-secondary-hover px-5 py-3 rounded-lg text-white cursor-pointer"
+          className="bg-secondary hover:bg-secondary-hover md:px-5 md:py-3 py-2 px-3 min-w-16 rounded-lg text-white cursor-pointer"
           type="submit"
           value="Send"
         />
@@ -94,6 +93,7 @@ const Methods = () => {
       value={selectedMethod}
       defaultValue={selectedMethod}
       onChange={handleMethodChange}
+      className='min-w-[5.25rem]'
       styles={{
         control: (provided) => ({
           ...provided,

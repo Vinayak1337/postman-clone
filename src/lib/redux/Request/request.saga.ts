@@ -1,8 +1,9 @@
-import axios, { Axios, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import {
   createRequestStart,
   createRequestSuccess,
   deleteRequest,
+  fetchRequestsFailure,
   fetchRequestsStart,
   fetchRequestsSuccess,
   sendRequestStart,
@@ -23,6 +24,8 @@ function* fetchRequests() {
     yield put(fetchRequestsSuccess(data));
   } catch (error) {
     console.error(error);
+
+    yield put(fetchRequestsFailure());
   }
 }
 
@@ -110,7 +113,7 @@ function* sendRequest(action: ReturnType<typeof sendRequestStart>) {
   } catch (error: any) {
     console.error(error);
     toast.error(
-      [error.message, error.response?.statusText]
+      [error.message, error.response?.statusText, error.response?.data?.message]
         .filter((t) => !!t)
         .join(' - '),
     );

@@ -14,8 +14,12 @@ type UserResponse = {
 };
 
 const initialState = {
-  requests: {} as {
+  requests: {
+    loading: false,
+  } as {
     [id: string]: Partial<Request> & PartialRequest;
+  } & {
+    loading: boolean;
   },
   selectedRequestId: '',
   response: {} as {
@@ -28,17 +32,28 @@ const requestSlice = createSlice({
   name: 'request',
   initialState,
   reducers: {
-    fetchRequestsStart() {},
+    fetchRequestsStart(state) {
+      state.requests.loading = true;
+    },
     fetchRequestsSuccess(
       state,
       action: PayloadAction<Prisma.RequestGetPayload<{}>[]>,
     ) {
-      state.requests = action.payload.reduce((acc, request) => {
-        acc[request.id] = request;
-        return acc;
-      }, {} as typeof state.requests);
+      state.requests = action.payload.reduce(
+        (acc, request) => {
+          acc[request.id] = request;
+          return acc;
+        },
+        {
+          loading: false,
+        } as typeof state.requests,
+      );
+
       if (!state.selectedRequestId)
         state.selectedRequestId = Object.keys(state.requests).at(-1) || '';
+    },
+    fetchRequestsFailure(state) {
+      state.requests.loading = false;
     },
     setRequest(state, action: PayloadAction<Request>) {
       state.requests[action.payload.id] = action.payload;
@@ -130,6 +145,7 @@ export const {
   changeParams,
   selectMeta,
   updateRequestData,
+  fetchRequestsFailure
 } = requestSlice.actions;
 
 export default requestSlice.reducer;
