@@ -70,11 +70,15 @@ function* sendRequest(action: ReturnType<typeof sendRequestStart>) {
       method: action.payload.method,
       data: action.payload.body,
       headers: action.payload.headers?.reduce((acc, curr) => {
-        acc[curr.key] = curr.value;
+        if (curr.enabled) {
+          acc[curr.key] = curr.value;
+        }
         return acc;
       }, {} as any),
       params: action.payload.params?.reduce((acc, curr) => {
-        acc[curr.key] = curr.value;
+        if (curr.enabled) {
+          acc[curr.key] = curr.value;
+        }
         return acc;
       }, {} as any),
     })) as AxiosResponse;
